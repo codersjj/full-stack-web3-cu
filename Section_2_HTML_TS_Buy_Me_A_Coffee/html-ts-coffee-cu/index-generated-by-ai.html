@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop - Smart Contract Interaction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .connected {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>☕ Coffee Shop</h1>
+    <p>Interact with our smart contract</p>
+    
+    <div id="status" class="disconnected">Not connected to wallet</div>
+    
+    <button id="connectBtn">Connect Wallet</button>
+    <button id="buyCoffeeBtn" disabled>Buy Coffee</button>
+    <button id="getBalanceBtn" disabled>Get Balance</button>
+    <button id="withdrawBtn" disabled>Withdraw</button>
+    
+    <script>
+        // Basic contract interaction functions
+        async function connectWallet() {
+            try {
+                if (window.ethereum) {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    document.getElementById('status').textContent = "Wallet connected!";
+                    document.getElementById('status').className = "status connected";
+                    
+                    // Enable other buttons after connection
+                    document.getElementById('buyCoffeeBtn').disabled = false;
+                    document.getElementById('getBalanceBtn').disabled = false;
+                    document.getElementById('withdrawBtn').disabled = false;
+                    
+                    return true;
+                } else {
+                    document.getElementById('status').textContent = "Please install MetaMask!";
+                    return false;
+                }
+            } catch (error) {
+                console.error("Error connecting wallet:", error);
+                document.getElementById('status').textContent = "Connection error: " + error.message;
+                return false;
+            }
+        }
+        
+        async function buyCoffee() {
+            // TODO: Implement buyCoffee contract interaction
+            document.getElementById('status').textContent = "Buying coffee... (implementation needed)";
+            console.log("Buy coffee function called");
+        }
+        
+        async function getBalance() {
+            // TODO: Implement getBalance contract interaction
+            document.getElementById('status').textContent = "Getting balance... (implementation needed)";
+            console.log("Get balance function called");
+        }
+        
+        async function withdraw() {
+            // TODO: Implement withdraw contract interaction
+            document.getElementById('status').textContent = "Withdrawing... (implementation needed)";
+            console.log("Withdraw function called");
+        }
+        
+        // Event listeners for buttons
+        document.getElementById('connectBtn').addEventListener('click', connectWallet);
+        document.getElementById('buyCoffeeBtn').addEventListener('click', buyCoffee);
+        document.getElementById('getBalanceBtn').addEventListener('click', getBalance);
+        document.getElementById('withdrawBtn').addEventListener('click', withdraw);
+    </script>
+</body>
+</html>
