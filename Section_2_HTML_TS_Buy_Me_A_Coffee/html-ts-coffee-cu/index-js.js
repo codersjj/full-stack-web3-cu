@@ -41,7 +41,7 @@ async function fund() {
     })
     console.log('parseEther(amount):', parseEther(amount))
 
-    const currentChain = getCurrentChain(walletClient)
+    const currentChain = await getCurrentChain(walletClient)
 
     const { result } = await publicClient.simulateContract({
       address: contractAddress,
