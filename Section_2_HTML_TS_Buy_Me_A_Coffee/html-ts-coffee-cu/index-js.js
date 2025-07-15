@@ -43,7 +43,7 @@ async function fund() {
 
     const currentChain = await getCurrentChain(walletClient)
 
-    const { result } = await publicClient.simulateContract({
+    const { request } = await publicClient.simulateContract({
       address: contractAddress,
       abi: coffeeABI,
       functionName: 'fund',
@@ -51,7 +51,10 @@ async function fund() {
       chain: currentChain,
       value: parseEther(amount),
     })
-    console.log('🚀 ~ fund ~ result:', result)
+    console.log('🚀 ~ fund ~ request:', request)
+
+    const hash = await walletClient.writeContract(request)
+    console.log('Transaction hash:', hash)
   }
 }
 
