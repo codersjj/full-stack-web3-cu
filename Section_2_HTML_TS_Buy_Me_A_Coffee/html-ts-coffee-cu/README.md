@@ -8,7 +8,8 @@
     - Call a function on a smart contract✅
     - Have a test blockchain that we can call?✅
   - Get Balance✅
-  - Withdraw
+  - Withdraw✅
+  - TypeScript
 
 ## Examples of working with AI
 
