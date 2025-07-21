@@ -9,7 +9,13 @@
     - Have a test blockchain that we can call?✅
   - Get Balance✅
   - Withdraw✅
-  - TypeScript
+  - TypeScript✅
+
+## Get Started
+
+```bash
+anvil --load-state fundme-anvil.json
+```
 
 ## Examples of working with AI
 
