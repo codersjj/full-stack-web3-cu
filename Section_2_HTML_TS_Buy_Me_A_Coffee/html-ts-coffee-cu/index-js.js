@@ -13,6 +13,7 @@ const fundButton = document.getElementById('fundButton')
 const ethAmountInput = document.getElementById('ethAmount')
 const balanceButton = document.getElementById('balanceButton')
 const withdrawButton = document.getElementById('withdrawButton')
+const getAmountFundedButton = document.getElementById('getAmountFundedButton')
 
 async function connect() {
   if (typeof window.ethereum === 'undefined') {
@@ -129,7 +130,34 @@ async function getBalance() {
   }
 }
 
+async function getAddressToAmountFunded() {
+  if (typeof window.ethereum === 'undefined') {
+    connectButton.innerHTML = 'Please install MetaMask'
+  } else {
+    const publicClient = createPublicClient({
+      transport: custom(window.ethereum),
+    })
+
+    const currentChain = await getCurrentChain(publicClient)
+
+    const walletClient = createWalletClient({
+      transport: custom(window.ethereum),
+    })
+    const [connectedAccount] = await walletClient.requestAddresses()
+
+    const addressToAmountFunded = await publicClient.readContract({
+      address: contractAddress,
+      abi: coffeeABI,
+      functionName: 'getAddressToAmountFunded',
+      args: [connectedAccount], // Replace with the actual address you want to check
+      chain: currentChain,
+    })
+    console.log('Address to Amount Funded:', addressToAmountFunded)
+  }
+}
+
 connectButton.onclick = connect
 fundButton.onclick = fund
 balanceButton.onclick = getBalance
 withdrawButton.onclick = withdraw
+getAmountFundedButton.onclick = getAddressToAmountFunded
