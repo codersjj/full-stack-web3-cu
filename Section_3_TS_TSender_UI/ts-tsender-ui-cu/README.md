@@ -49,3 +49,24 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { FaGithub } from 'react-icons/fa'
 import Image from 'next/image'
 ```
+
+### Example 2
+
+I'm looking to make an input field react component with tsx. It should take the following props:
+
+- a label
+- placeholder
+- value
+- type
+- large (whether or not the textarea is large)
+- onChange (the function to call when the area changes)
+
+I'm using tailwind for styling.
+
+### Example 3
+
+```
+...
+```
+
+Here is what my instructor gave me, what's the difference?
