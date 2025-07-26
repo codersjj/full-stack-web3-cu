@@ -105,3 +105,22 @@ or:
 ```
 
 and adds all the numbers up. It can be comma or new line delimited. Can you make such a function in ts?
+
+### Example 6
+
+Great! Here's what I'm going with:
+
+```ts
+export function calculateTotal(amounts: string): number {
+  // Split by commas or newlines and remove any empty entries
+  const amountArr = amounts.split(/[,|\n]+/).filter((amt) => amt.trim() !== "");
+
+  // Convert to numbers and sum
+  return amountArr.reduce((sum, str) => {
+    const num = parseFloat(str.trim());
+    return sum + (isNaN(num) ? 0 : num);
+  }, 0);
+}
+```
+
+Can you write me a test for this now? I'm going to use `Vitest`, and have the test be in the same dir.
