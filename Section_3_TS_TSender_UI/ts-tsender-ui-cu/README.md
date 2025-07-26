@@ -1,6 +1,7 @@
-1. Create a basic react/nextjs application
+1. Create a basic react/nextjs application✅
    1. Static!
-2. Implememt this function:
+2. Connect our wallet, with a nicer connect application
+3. Implememt this function:
 
 ```Solidity
 function airdropERC20(
@@ -14,4 +15,4 @@ function airdropERC20(
 [address(a), address(b), address(c)]
 [100, 200, 300]
 
-3. Deploy to fleek
+4. Deploy to fleek
