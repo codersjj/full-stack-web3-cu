@@ -80,3 +80,28 @@ Here is my button:
 ```
 
 Using tailwind, can you make it look a little nicer?
+
+### Example 5
+
+Here is a useMemo I'm going to use:
+
+```tsx
+const total: number = useMemo(() => caculateTotal(amounts), [amounts]);
+```
+
+I want to make a `caculateTotal` function which takes a string in the format:
+
+```
+100
+200
+300
+```
+
+or:
+
+```
+100,200
+300
+```
+
+and adds all the numbers up. It can be comma or new line delimited. Can you make such a function in ts?
