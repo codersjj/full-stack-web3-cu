@@ -70,3 +70,13 @@ I'm using tailwind for styling.
 ```
 
 Here is what my instructor gave me, what's the difference?
+
+### Example 4
+
+Here is my button:
+
+```tsx
+<button onClick={handleSubmit}>Set Tokens</button>
+```
+
+Using tailwind, can you make it look a little nicer?
