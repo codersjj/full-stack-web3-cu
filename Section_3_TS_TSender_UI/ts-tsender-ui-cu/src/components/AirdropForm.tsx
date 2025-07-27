@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useChainId, useConfig, useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import { CgSpinner } from 'react-icons/cg'
@@ -25,6 +25,28 @@ export default function AirdropForm() {
     hash: hash,
     confirmations: 1
   })
+
+  useEffect(() => {
+    const tokenAddress = localStorage.getItem('tokenAddress') ?? ''
+    const recipients = localStorage.getItem('recipients') ?? ''
+    const amounts = localStorage.getItem('amounts') ?? ''
+
+    setTokenAddress(tokenAddress)
+    setRecipients(recipients)
+    setAmounts(amounts)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('tokenAddress', tokenAddress)
+  }, [tokenAddress])
+
+  useEffect(() => {
+    localStorage.setItem('recipients', recipients)
+  }, [recipients])
+
+  useEffect(() => {
+    localStorage.setItem('amounts', amounts)
+  }, [amounts])
 
   function getButtonContent() {
     if (isPending) {
