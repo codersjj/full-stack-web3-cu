@@ -1,8 +1,9 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { useChainId, useConfig, useAccount, useWriteContract } from 'wagmi'
+import { useChainId, useConfig, useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { readContract, waitForTransactionReceipt } from '@wagmi/core'
+import { CgSpinner } from 'react-icons/cg'
 import InputField from "@/components/ui/InputField"
 import { chainsToTSender, erc20Abi, tsenderAbi } from '@/constants'
 import { calculateTotal } from '@/utils'
@@ -19,7 +20,46 @@ export default function AirdropForm() {
     console.log("🚀 ~ AirdropForm ~ res:", res)
     return res
   }, [amounts])
-  const { writeContractAsync, data: hash, isPending } = useWriteContract()
+  const { writeContractAsync, data: hash, isPending, error } = useWriteContract()
+  const { isLoading: isConfirming, isSuccess: isConfirmed, isError } = useWaitForTransactionReceipt({
+    hash: hash,
+    confirmations: 1
+  })
+
+  function getButtonContent() {
+    if (isPending) {
+      return (
+        <div className='flex justify-center items-center gap-2 w-full'>
+          <CgSpinner className='animate-spin' size={20} />
+          <span>Confirming in wallet...</span>
+        </div>
+      )
+    }
+
+    if (isConfirming) {
+      return (
+        <div className="flex justify-center items-center gap-2 w-full">
+          <CgSpinner className='animate-spin' size={20} />
+          <span>Waiting for transaction to be included...</span>
+        </div>
+      )
+    }
+
+    if (error || isError) {
+      console.log(error)
+      return (
+        <div className="flex justify-center items-center gap-2 w-full">
+          <span>Error, see console.</span>
+        </div>
+      )
+    }
+
+    if (isConfirmed) {
+      return 'Transaction confirmed.'
+    }
+
+    return 'Set Tokens'
+  }
 
   async function getApprovedAmount(tSenderAddress: string | null): Promise<number> {
     if (!tSenderAddress) {
@@ -123,7 +163,7 @@ export default function AirdropForm() {
         >
           {/* Gradient */}
           <div className="absolute w-full inset-0 bg-gradient-to-b from-white/25 via-80% to-transparent mix-blend-overlay z-10 rounded-lg" />
-          Set Tokens
+          {getButtonContent()}
         </button>
       </div>
     </div>
