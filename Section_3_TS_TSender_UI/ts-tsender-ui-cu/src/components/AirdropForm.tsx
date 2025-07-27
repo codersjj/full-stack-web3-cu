@@ -185,7 +185,11 @@ export default function AirdropForm() {
         >
           {/* Gradient */}
           <div className="absolute w-full inset-0 bg-gradient-to-b from-white/25 via-80% to-transparent mix-blend-overlay z-10 rounded-lg" />
-          {getButtonContent()}
+          {
+            isPending || isConfirming || error
+              ? getButtonContent()
+              : 'Set Tokens'
+          }
         </button>
       </div>
     </div>
