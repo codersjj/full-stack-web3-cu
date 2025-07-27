@@ -1,8 +1,8 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { useChainId, useConfig, useAccount } from 'wagmi'
-import { readContract } from '@wagmi/core'
+import { useChainId, useConfig, useAccount, useWriteContract } from 'wagmi'
+import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import InputField from "@/components/ui/InputField"
 import { chainsToTSender, erc20Abi, tsenderAbi } from '@/constants'
 import { calculateTotal } from '@/utils'
@@ -19,6 +19,7 @@ export default function AirdropForm() {
     console.log("🚀 ~ AirdropForm ~ res:", res)
     return res
   }, [amounts])
+  const { writeContractAsync, data: hash, isPending } = useWriteContract()
 
   async function getApprovedAmount(tSenderAddress: string | null): Promise<number> {
     if (!tSenderAddress) {
@@ -51,7 +52,32 @@ export default function AirdropForm() {
     const approvedAmount = await getApprovedAmount(tSenderAddress)
     console.log("🚀 ~ handleSubmit ~ approvedAmount:", approvedAmount)
 
-    // if (result < totalAmountNeed...)
+    if (approvedAmount < total) {
+      const approvalHash = await writeContractAsync({
+        abi: erc20Abi,
+        address: tokenAddress as `0x${string}`,
+        functionName: 'approve',
+        args: [tSenderAddress, BigInt(total)]
+      })
+
+      const approvalReceipt = await waitForTransactionReceipt(config, {
+        hash: approvalHash
+      })
+
+      console.log('Approval confirmed', approvalReceipt)
+    }
+
+    await writeContractAsync({
+      abi: tsenderAbi,
+      address: tSenderAddress as `0x${string}`,
+      functionName: 'airdropERC20',
+      args: [
+        tokenAddress,
+        recipients.split(/[,\n]+/).map(addr => addr.trim()).filter(addr => addr !== ''),
+        amounts.split(/[,\n]+/).map(amt => amt.trim()).filter(amt => amt !== ''),
+        BigInt(total)
+      ]
+    })
   }
 
   return (
