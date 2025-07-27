@@ -28,7 +28,7 @@ export default function InputField({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all min-h-[150px]"
+          className="w-full bg-white py-2 px-3 border border-zinc-300 placeholder:text-zinc-500 text-zinc-900 shadow-xs rounded-lg focus:ring-[4px] focus:ring-zinc-400/15 focus:outline-none min-h-[150px]"
         />
       ) : (
         <input
@@ -36,7 +36,7 @@ export default function InputField({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+          className="w-full bg-white py-2 px-3 border border-zinc-300 placeholder:text-zinc-500 text-zinc-900 shadow-xs rounded-lg focus:ring-[4px] focus:ring-zinc-400/15 focus:outline-none"
         />
       )}
     </div>

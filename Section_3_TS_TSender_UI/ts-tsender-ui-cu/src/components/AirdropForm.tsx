@@ -81,44 +81,51 @@ export default function AirdropForm() {
   }
 
   return (
-    <div>
-      <InputField
-        label="Token Address"
-        placeholder="0x"
-        value={tokenAddress}
-        onChange={e => setTokenAddress(e.target.value)}
-      />
-      <InputField
-        label="Recipients"
-        placeholder='0x123..., 0x456...'
-        value={recipients}
-        onChange={e => setRecipients(e.target.value)}
-        large
-      />
-      <InputField
-        label="Amounts"
-        placeholder='100, 200, 300...'
-        value={amounts}
-        onChange={e => setAmounts(e.target.value)}
-        large
-      />
+    <div className='p-4 md:p-6 lg:p-8'>
+      <div className='flex flex-col max-w-2xl min-w-full xl:min-w-lg w-full lg:mx-auto p-6 rounded-xl border-2 border-blue-500 ring-[4px] ring-blue-500/25'>
+        <InputField
+          label="Token Address"
+          placeholder="0x"
+          value={tokenAddress}
+          onChange={e => setTokenAddress(e.target.value)}
+        />
+        <InputField
+          label="Recipients"
+          placeholder='0x123..., 0x456...'
+          value={recipients}
+          onChange={e => setRecipients(e.target.value)}
+          large
+        />
+        <InputField
+          label="Amounts"
+          placeholder='100, 200, 300...'
+          value={amounts}
+          onChange={e => setAmounts(e.target.value)}
+          large
+        />
 
-      <button
-        onClick={handleSubmit}
-        className="
-          px-6 py-3 
-          bg-blue-500 hover:bg-blue-600 
-          text-white font-medium 
-          rounded-lg 
-          transition-all duration-200 
-          shadow-md hover:shadow-lg 
-          transform hover:-translate-y-0.5 
-          focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75
-          active:translate-y-0
-        "
-      >
-        Set Tokens
-      </button>
+        <button
+          onClick={handleSubmit}
+          className="
+            relative
+            flex justify-center items-center
+            px-6 py-3
+            cursor-pointer
+            bg-blue-500 hover:bg-blue-600 
+            text-white font-medium 
+            rounded-lg 
+            transition-all duration-200 
+            shadow-md hover:shadow-lg 
+            transform hover:-translate-y-0.5 
+            focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75
+            active:translate-y-0
+          "
+        >
+          {/* Gradient */}
+          <div className="absolute w-full inset-0 bg-gradient-to-b from-white/25 via-80% to-transparent mix-blend-overlay z-10 rounded-lg" />
+          Set Tokens
+        </button>
+      </div>
     </div>
   )
 }
