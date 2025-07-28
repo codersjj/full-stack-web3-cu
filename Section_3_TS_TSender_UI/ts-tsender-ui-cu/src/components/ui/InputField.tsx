@@ -18,7 +18,7 @@ export default function InputField({
   onChange
 }: InputFieldProps) {
   return (
-    <div className="w-full mb-4">
+    <div className="w-full">
       <label className="block text-gray-700 text-sm font-medium mb-2">
         {label}
       </label>
