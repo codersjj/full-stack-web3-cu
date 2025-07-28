@@ -12,6 +12,7 @@ export default function AirdropForm() {
   const [tokenAddress, setTokenAddress] = useState('')
   const [recipients, setRecipients] = useState('')
   const [amounts, setAmounts] = useState('')
+  const [hasEnoughTokens, setHasEnoughTokens] = useState(true)
   const chainId = useChainId()
   const config = useConfig()
   const account = useAccount()
@@ -71,6 +72,15 @@ export default function AirdropForm() {
   useEffect(() => {
     localStorage.setItem('amounts', amounts)
   }, [amounts])
+
+  useEffect(() => {
+    if (tokenAddress && total > 0 && tokenBalanceOfData?.result) {
+      const userBalance = tokenBalanceOfData?.result as number
+      setHasEnoughTokens(userBalance >= total)
+    } else {
+      setHasEnoughTokens(true)
+    }
+  }, [tokenAddress, tokenBalanceOfData, total])
 
   function getButtonContent() {
     if (isPending) {
@@ -229,7 +239,7 @@ export default function AirdropForm() {
 
         <button
           onClick={handleSubmit}
-          className="
+          className={`
             relative
             flex justify-center items-center
             px-6 py-3
@@ -242,14 +252,19 @@ export default function AirdropForm() {
             transform hover:-translate-y-0.5 
             focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75
             active:translate-y-0
-          "
+            ${!tokenAddress || !hasEnoughTokens ? 'opacity-50 cursor-not-allowed' : ''}
+          `}
+          disabled={!tokenAddress || !hasEnoughTokens}
         >
           {/* Gradient */}
           <div className="absolute w-full inset-0 bg-gradient-to-b from-white/25 via-80% to-transparent mix-blend-overlay z-10 rounded-lg" />
           {
             isPending || isConfirming || error
               ? getButtonContent()
-              : 'Set Tokens'
+              : hasEnoughTokens
+                ? 'Set Tokens'
+                : 'Insufficient token balance'
+                
           }
         </button>
       </div>
