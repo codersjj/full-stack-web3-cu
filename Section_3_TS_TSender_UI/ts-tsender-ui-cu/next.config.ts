@@ -10,9 +10,9 @@ const nextConfig: NextConfig = {
   basePath: "",
   // assetPrefix: './',
   trailingSlash: true,
-  experimental: {
-    allowDevelopmentBuild: true,
-  },
+  // experimental: {
+  //   allowDevelopmentBuild: true,
+  // },
 };
 
 export default nextConfig;
