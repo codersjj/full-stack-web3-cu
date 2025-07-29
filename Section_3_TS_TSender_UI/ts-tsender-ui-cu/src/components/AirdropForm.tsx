@@ -12,6 +12,7 @@ export default function AirdropForm() {
   const [tokenAddress, setTokenAddress] = useState('')
   const [recipients, setRecipients] = useState('')
   const [amounts, setAmounts] = useState('')
+  const [isInitialized, setIsInitialized] = useState(false)
   const [hasEnoughTokens, setHasEnoughTokens] = useState(true)
   const chainId = useChainId()
   const config = useConfig()
@@ -59,19 +60,27 @@ export default function AirdropForm() {
     setTokenAddress(tokenAddress)
     setRecipients(recipients)
     setAmounts(amounts)
+
+    setIsInitialized(true)
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('tokenAddress', tokenAddress)
-  }, [tokenAddress])
+    if (isInitialized) {
+      localStorage.setItem('tokenAddress', tokenAddress)
+    }
+  }, [tokenAddress, isInitialized])
 
   useEffect(() => {
-    localStorage.setItem('recipients', recipients)
-  }, [recipients])
+    if (isInitialized) {
+      localStorage.setItem('recipients', recipients)
+    }
+  }, [recipients, isInitialized])
 
   useEffect(() => {
-    localStorage.setItem('amounts', amounts)
-  }, [amounts])
+    if (isInitialized) {
+      localStorage.setItem('amounts', amounts)
+    }
+  }, [amounts, isInitialized])
 
   useEffect(() => {
     if (tokenAddress && total > 0 && tokenBalanceOfData?.result) {
