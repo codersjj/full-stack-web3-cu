@@ -16,6 +16,8 @@ function airdropERC20(
 [100, 200, 300]
 
 4. e2e testing
+   1. When we connect, we see the form
+   2. When disconnected, we don't
 5. Deploy to fleek
 
 ## Examples of working with AI
