@@ -34,7 +34,12 @@ interface BoughtCanceled {
 }
 
 async function fetchNFTs(): Promise<NFTQueryResponse> {
-  const response = await fetch('/api/graphql', {
+  const apiUrl = typeof window === 'undefined'
+    ? (process.env.GRAPHQL_API_URL || 'http://localhost:3001/graphql')
+    : '/api/graphql'
+  console.log("🚀 ~ fetchNFTs ~ apiUrl:", apiUrl)
+
+  const response = await fetch(apiUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
