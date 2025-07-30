@@ -3,6 +3,79 @@ import { useMemo } from "react"
 import NFTBox from "./NFTBox"
 import Link from "next/link"
 
+interface NFTQueryResponse {
+  data: {
+    allItemListeds: {
+      nodes: NFTItem[]
+    },
+    allItemBoughts: {
+      nodes: BoughtCanceled[]
+    },
+    allItemCanceleds: {
+      nodes: BoughtCanceled[]
+    }
+  }
+}
+
+interface NFTItem {
+  rindexerId: string,
+  seller: string,
+  nftAddress: string,
+  price: string,
+  tokenId: string,
+  contractAddress: string,
+  txHash: string,
+  blockNumber: string
+}
+
+interface BoughtCanceled {
+  nftAddress: string,
+  tokenId: string
+}
+
+async function fetchNFTs(): Promise<NFTQueryResponse> {
+  const response = await fetch('/api/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: GET_RECENT_NFTS
+    })
+  })
+
+  return response.json()
+}
+
+const GET_RECENT_NFTS = `
+query AllItemListeds {
+  allItemListeds(first: 20, orderBy: [BLOCK_NUMBER_DESC, TX_INDEX_DESC]) {
+    nodes {
+      seller
+      nftAddress
+      price
+      tokenId
+      contractAddress
+      txHash
+    }
+  }
+  allItemBoughts {
+    nodes {
+      nftAddress
+      tokenId
+    }
+  }
+  allItemCanceleds {
+    nodes {
+      nftAddress
+      tokenId
+    }
+  }
+}
+`
+
+console.log(await fetchNFTs())
+
 // Main component that uses the custom hook
 export default function RecentlyListedNFTs() {
     return (
