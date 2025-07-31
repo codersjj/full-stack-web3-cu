@@ -9,7 +9,7 @@
     "endOfLine": "lf",
     "overrides": [
         {
-            "files": "*.tsx",
+            "files": ["*.ts", "*.tsx"],
             "options": {
                 "tabWidth": 2
             }
